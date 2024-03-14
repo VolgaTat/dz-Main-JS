@@ -1,26 +1,37 @@
 // Массив чисел arr = [1, 40, -5, 10, 0]
 // Написать функцию, которая сортирует данный массив при помощи циклов
-// (или по возрастанию, или по убыванию)
-const arr = [1, 40, -5, -10, 0]
-const arr1 = [-12, 44, -6, 99, 0]
-const arr2 = [-6,-1,-4,-7,-8]
-const arr3 = []
-
-const assortArray = (arrNew)=>{
-  // 1. Пробегаем по массиву циклом i
-  for (let i = 0; i < arrNew.length; i++) {
-    //2. Запускаем внутренний цикл j
-    for (let j = 0; j < arrNew.length - i; j++) {
-      if (arrNew[j] > arrNew[j + 1] ){
-        //Меняем согласно условию 
-       [arrNew[j], arrNew[j + 1]] = [arrNew[j + 1], arrNew[j]]
+// // (или по возрастанию, или по убыванию)
+let count = 0;
+const assortArray = (arr)=>{
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] > arr[j]){
+        let tempVariable = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tempVariable;
       }
+      count++;
+      console.log(`Итерации: i: ${i} - j: ${j}, общее кол-во: ${count}`)
     }
   }
-  return arrNew;
+return arr;
 }
+console.log(assortArray([1, 40, -5, -10, 0]));
+// console.log(assortArray([21, 480, 45, -10, 0]));
+// console.log(assortArray([-2, 0, -45, -10, -245]));
 
-console.log(assortArray(arr));
-console.log(assortArray(arr1));
-console.log(assortArray(arr2));
-console.log(assortArray(arr3));
+const assortArrayTime = (arr)=>{
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length - i; j++) {
+      if (arr[j] > arr[j + 1]){
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+      }
+      count++;
+       console.log(`Итерации: i: ${i} - j: ${j}, общее кол-во: ${count}`)
+    }
+  }
+return arr;
+}
+console.log(assortArrayTime([1, 40, -5, -10, 0]));
+// console.log(assortArray([21, 480, 45, -10, 0]));
+// console.log(assortArray([-2, 0, -45, -10, -245]));
