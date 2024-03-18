@@ -6,68 +6,57 @@
  //или null - если нет
  //Ставки конвертации хранятся внутри функции
 
-function converter(sum, targetCurrency, currency){
-  let result;
-  let courseUSDinRUB = 91.33;
-  let courseUSDinEUR = 0.9;
-  let courseRUBinEUR = 112.33;
-  
-  switch(currency){ 
-    case 'USD':
-      switch (targetCurrency) { 
-          case 'RUB':
-            result = Math.ceil(sum * courseUSDinRUB) + " руб";
-            break;
-          case 'EUR':
-            result = Math.ceil(sum * courseUSDinEUR) + " €";
-            break;
-          default:
-            return null;
-      }
-    break;
-  }
-  switch(currency){ 
-    case 'RUB':
-      switch (targetCurrency) { 
-          case 'USD':
-            result = Math.ceil(sum / courseUSDinRUB) + " $";
-            break;
-          case 'EUR':
-            result = Math.ceil(sum / courseRUBinEUR) + " €";
-            break;
-          default:
-            return null;
-      }
-    break;
-  }
-  switch(currency){ 
-    case 'EUR':
-      switch (targetCurrency) { 
-          case 'RUB':
-            result = Math.ceil(sum * courseRUBinEUR) + " руб";
-            break;
-          case 'USD':
-            result = Math.ceil(sum * courseUSDinEUR) + " $";
-            break;
-          default:
-            return null;
-      }
-    break;
-  }
- return result;
+ function convertSum(sum, from, to) {
+  return ((sum * from) / to).toFixed(2);
 }
 
-console.log(converter(10, "RUB", "USD"));
-console.log(converter(10, "EUR", "USD"));
+function converter(sum, currency, targetCurrency) {
+  const USD = 91.33;
+  const RUB = 1;
+  const EUR = 112.33;
 
-console.log(converter(1500, "EUR", "RUB"));
-console.log(converter(1500, "USD", "RUB"));
-
-console.log(converter(10, "RUB", "EUR"));
-console.log(converter(10, "USD", "EUR"));
-
-console.log(converter(10, "RUB", "EURU"));
-console.log(converter(10, "USD", "EUR"));
-
-console.log(converter(10, "RUB", "EUR"));
-console.log(converter(10, "USDTY", "EUR"));
+  switch (currency) {
+      case 'USD':
+          switch (targetCurrency) {
+              case 'RUB':
+                  return convertSum(sum, USD, RUB) + ' руб';
+              case 'EUR':
+                  return convertSum(sum, USD, EUR) + ' €';
+              default: {
+                  console.log('Исходящая валюта мне неизвестна');
+                  return null;
+              }
+          }
+      case 'RUB':
+          switch (targetCurrency) {
+              case 'USD':
+                  return convertSum(sum, RUB, USD) + ' $';
+              case 'EUR':
+                  return convertSum(sum, RUB, EUR) + ' €';
+              default: {
+                  console.log('Исходящая валюта мне неизвестна');
+                  return null;
+              }
+          }
+      case 'EUR':
+          switch (targetCurrency) {
+              case 'RUB':
+                  return convertSum(sum, EUR, RUB) + ' руб';
+              case 'USD':
+                  return convertSum(sum, EUR, USD) + ' $';
+              default: {
+                  console.log('Исходящая валюта мне неизвестна');
+                  return null;
+              }
+          }
+      default: {
+        console.log('Входящая валюта мне неизвестна');
+        return null;
+    }
+  }
+}
+console.log(converter(100, 'RUB', 'USD'));      // 1.09 $
+console.log(converter(100, 'RUB', 'EUR'));      // 0.89 €
+console.log(converter(1000, 'EUR', 'USD'));     // 1229.94 $
+console.log(converter(1000, 'USD', 'EUR'));     // 813.05 €
+console.log(converter(1000, 'EUR', 'RUB'));     // 112330.00 руб

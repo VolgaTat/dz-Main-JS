@@ -13,7 +13,8 @@ function encryptPassword(pass){
     return false;
   } else {
     const removePartEnd = smashPassword.splice(4);
-    const nemPassword = `${removePartEnd.join("")}${smashPassword.join("")}`;
+    // const nemPassword = `${removePartEnd.join("")}${smashPassword.join("")}`;
+    const nemPassword = [...removePartEnd, ...smashPassword].join('');
     return nemPassword;
   }
 }
