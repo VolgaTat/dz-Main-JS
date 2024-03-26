@@ -38,5 +38,4 @@ return arrSignDelete.filter(elem => elem.length > 1)
   .filter(elem => elem[0] <= 31 && elem[1] <= 12 && elem[2].length > 3)
   .map(elem => elem.join("-"));
 }
-
 console.log(filterDateStr(dateArrayStr));
