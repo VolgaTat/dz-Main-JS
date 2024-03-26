@@ -24,7 +24,6 @@
 // Отфильтрованный и преобразованный массив содержащий только даты в едином формате.
 
 const dateArrayStr = ['10-02-2022', 'тест', '19/05/202', '00/12/2022', '41/12/2023', '05.02.2024', "00/00/00", '06,05,2024']
-
 function filterDateStr() {
   let arrSignDelete = [];
   for(let strElem of dateArrayStr){
@@ -39,4 +38,5 @@ return arrSignDelete.filter(elem => elem.length > 1)
   .filter(elem => elem[0] <= 31 && elem[1] <= 12 && elem[2].length > 3)
   .map(elem => elem.join("-"));
 }
+
 console.log(filterDateStr(dateArrayStr));
