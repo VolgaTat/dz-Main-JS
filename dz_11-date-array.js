@@ -23,19 +23,26 @@
 
 // Отфильтрованный и преобразованный массив содержащий только даты в едином формате.
 
-const dateArrayStr = ['10-02-2022', 'тест', '19/05/202', '00/12/2022', '41/12/2023', '05.02.2024', "00/00/00", '06,05,2024']
+const dateArrayStr = ['10-02-2022', 'тест', '12/05/2022', '00/12/2022', "12/05/0000", '41/12/2023', '05.02.2024', "00/00/00", '06,05,2024']
 function filterDateStr() {
-  let arrSignDelete = [];
-  for(let strElem of dateArrayStr){
-    let arrSign = strElem.split("")
-      .map(elem => (elem == "-" || elem == "/" || elem === ".") ? ',' : elem)
-      .join('')
-      .split(",");
-      arrSignDelete.push(arrSign);
+  let z = [];
+  for (let i = 0; i < dateArrayStr.length; i++) {
+    if(dateArrayStr[i].includes('/')){
+      dateArrayStr[i] = [dateArrayStr[i].slice(3,5) + "," +  dateArrayStr[i].slice(0,2) + ","+ dateArrayStr[i].slice(6)];
+    }
+    if(dateArrayStr[i].includes('-') || dateArrayStr[i].includes('.') || dateArrayStr[i].includes(',')){
+      dateArrayStr[i] = [dateArrayStr[i].replace(/[\W+]/gi,",")];
+    } 
   }
-return arrSignDelete.filter(elem => elem.length > 1)
-  .filter(elem => elem[0] !== "00" && elem[1] !== "00" && elem[2] !== "00")
-  .filter(elem => elem[0] <= 31 && elem[1] <= 12 && elem[2].length > 3)
-  .map(elem => elem.join("-"));
-}
+  console.log(dateArrayStr)
+  let x = dateArrayStr.filter(elem => typeof elem === "object")
+    .flat(1)
+    .map(elem => elem.split(","));
+    for (let i = 0; i < x.length; i++) {
+      if(x[i][0] <= 31 && x[i][1] <= 12 && x[i][1] !== "00" && x[i][0] !== "00" && x[i][2] !== "0000" ){
+        z.push(x[i]);
+      }  
+    }
+    return z.map(elem=> elem.join("-"));
+ }
 console.log(filterDateStr(dateArrayStr));
