@@ -61,10 +61,10 @@ function resultTemplate(card) {
   const endString = `получила результат: ${cardLunaValidate(card)}`;
   return `${startString} ${endString}`;
 }
-const card = '234s834503458353';
-const card1 = '2342834503458353';
-const card2 = '4561-2612-1234-548';
-const card3 = '4561-2612-1534-5464';
+const card = '234s834503458353';//NaN
+const card1 = '2342834503458353';//true
+const card2 = '4561-2612-1234-548';//true
+const card3 = '4561-2612-1534-5464';//true
 
 console.log(resultTemplate(card));
 console.log(resultTemplate(card1));

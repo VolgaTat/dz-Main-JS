@@ -22,27 +22,43 @@
 // Результат:
 
 // Отфильтрованный и преобразованный массив содержащий только даты в едином формате.
-
-const dateArrayStr = ['10-02-2022', 'тест', '12/05/2022', '00/12/2022', "12/05/0000", '41/12/2023', '05.02.2024', "00/00/00", '06,05,2024']
-function filterDateStr() {
-  let z = [];
-  for (let i = 0; i < dateArrayStr.length; i++) {
-    if(dateArrayStr[i].includes('/')){
-      dateArrayStr[i] = [dateArrayStr[i].slice(3,5) + "," +  dateArrayStr[i].slice(0,2) + ","+ dateArrayStr[i].slice(6)];
-    }
-    if(dateArrayStr[i].includes('-') || dateArrayStr[i].includes('.') || dateArrayStr[i].includes(',')){
-      dateArrayStr[i] = [dateArrayStr[i].replace(/[\W+]/gi,",")];
-    } 
+const dateArrayStr1 = ['29-02-1980', "29-02-1982", "29-02-2022", "29-02-2024",'31-03-2022','31-04-2022', "28-02-2022", 'тест', '12/30/2022', '00/12/2022', "12/31/0000", '41/12/2023']
+function stringToArray(str) {
+  let day, month, year;
+  if (str.includes('/')) {
+    [month, day, year] = str.split('/');
+  } else if (str.includes('-')) {
+    [day, month, year] = str.split('-');
   }
-  console.log(dateArrayStr)
-  let x = dateArrayStr.filter(elem => typeof elem === "object")
-    .flat(1)
-    .map(elem => elem.split(","));
-    for (let i = 0; i < x.length; i++) {
-      if(x[i][0] <= 31 && x[i][1] <= 12 && x[i][1] !== "00" && x[i][0] !== "00" && x[i][2] !== "0000" ){
-        z.push(x[i]);
-      }  
+  if (!year || isNaN(day) || isNaN(month) || isNaN(year)) {
+    return null;
+  }
+  return [day, month, year];
+}
+
+function filterDateStr(){
+  let formatDate = [];
+  for (let i = 0; i < dateArrayStr1.length; i++) {
+    formatDate.push(stringToArray(dateArrayStr1[i]));
+  }
+  return formatDate.filter(elem => Array.isArray(elem));
+}
+
+function filterNumberofDays(filterNum) {
+let monthsArray = [];
+let numMonth = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  for (let k = numMonth.length - 2; k >= 0; k = k - 2) {
+    for (let i = 0; i < filterNum.length; i++) {
+      if((filterNum[i][1] === numMonth[k] && filterNum[i][0] <= 31) || (filterNum[i][1] === numMonth[k + 1] && filterNum[i][0] <= 30 )){
+        monthsArray.push(filterNum[i]);
+      }
     }
-    return z.map(elem=> elem.join("-"));
- }
-console.log(filterDateStr(dateArrayStr));
+  }
+  for (let i = monthsArray.length - 1; i>= 0; i--) {
+  if(monthsArray[i][2] % 4 !== 0 && monthsArray[i][0] == 29 && monthsArray[i][1].includes("02")){
+      monthsArray.splice(monthsArray.indexOf(monthsArray[i]),1);
+    }
+  }
+return monthsArray.map(elem => elem.join("-"));
+}
+console.log(filterNumberofDays(filterDateStr()));
