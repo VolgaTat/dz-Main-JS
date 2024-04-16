@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>         
+const calculator = {
+    sum(num1,num2){
+        return num1 + num2;
+    },
+    subtraction(num1,num2){
+        return num1 - num2;
+    },
+    multiplication(num1,num2){
+        return num1 * num2;
+    },
+    division(num1,num2){
+        if(num2 !== 0){
+            return num1/num2;
+        } 
+    },
+    countNum(){
+        let inputNum1 = parseFloat( document.querySelector(".num1").value);
+        let inputNum2 = parseFloat(document.querySelector('.num2').value);
+        let spanResult = document.querySelector('.result');
+        let znakAction = document.querySelector('.operation').value;
+        let result; 
+ 
+        switch(znakAction){
+            case "+": 
+            result = this.sum(inputNum1,inputNum2);
+            break;
+            case "-": 
+            result = this.subtraction(inputNum1,inputNum2);
+            break;
+            case "*": 
+            result = this.multiplication(inputNum1,inputNum2);
+            break;
+            case "/": 
+            result = this.division(inputNum1,inputNum2) || "Деление на ноль невозможно";
+            break;
+            default:
+            result = "Результат не определён";
+        }
+        spanResult.innerHTML = "" + result;
+    },
+    deleteNumInputInResult(){
+        document.querySelector(".num1").value = "";
+        document.querySelector(".num2").value = "";
+        document.querySelector('.result').innerHTML = "";
+        document.querySelector('.operation').value = "+";
+    }  
+}
+  </script>
+</head>
+<body>
+  <h2>Калькулятор</h2>
+  <input type="text" class="num1" placeholder="Введите число">
+  <select class="operation">
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">*</option>
+    <option value="/">/</option>
+  </select>
+  <input type="text" class="num2" placeholder="Введите число">
+  <button onclick="calculator.countNum()">=</button>
+  <span class="result"></span><br>
+  <button style ="margin-top: 20px;"onclick="calculator.deleteNumInputInResult()">Очистить поля</button>
+</body>
+</html>
